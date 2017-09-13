@@ -1,4 +1,5 @@
 import java.util.Date;
+import java.util.*;
 
 /**
  * A fix-sized array of students
@@ -231,42 +232,89 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public Student[] getByBirthDate(Date date) {
 		// Add your implementation here
-		return null;
+		ArrayList<Student> temp = new ArrayList<>();
+		   for(Student s : this.students)
+		   {
+		       if(s.getBirthDate().compareTo(date) == 0)
+				   temp.add(s);
+		   }
+		   return  temp.toArray(new Student[temp.size()]);
 	}
 
 	@Override
 	public Student[] getBetweenBirthDates(Date firstDate, Date lastDate) {
 		// Add your implementation here
-		return null;
+		ArrayList<Student> temp = new ArrayList<>();
+		   for(Student s : this.students)
+		   {
+		       if(s.getBirthDate().after(firstDate) && s.getBirthDate().before(lastDate))
+				   temp.add(s);
+		   }
+		   return  temp.toArray(new Student[temp.size()]); 
 	}
 
 	@Override
 	public Student[] getNearBirthDate(Date date, int days) {
 		// Add your implementation here
-		return null;
+		ArrayList<Student> temp = new ArrayList<>();
+		   Calendar cal = getCalendar(date);
+		   cal.add(Calendar.DATE, days);
+           date = cal.getTime();
+		   for(Student s : this.students)
+		   {
+		       if(s.getBirthDate().before(date))
+				   temp.add(s);
+		   }
+		   return  temp.toArray(new Student[temp.size()]); 
 	}
 
 	@Override
 	public int getCurrentAgeByDate(int indexOfStudent) {
 		// Add your implementation here
-		return 0;
+		Date now = new Date();
+           return this.students[indexOfStudent].getBirthDate().getYear() - now.getYear();
 	}
 
 	@Override
 	public Student[] getStudentsByAge(int age) {
 		// Add your implementation here
-		return null;
+		ArrayList<Student> temp = new ArrayList<>();
+		  for(int i = 0; i < this.students.length; i++)
+		  {
+		      if(getCurrentAgeByDate(i) == age)
+				  temp.add(this.students[i]);
+		  }
+          return  temp.toArray(new Student[temp.size()]);
 	}
 
 	@Override
 	public Student[] getStudentsWithMaxAvgMark() {
 		// Add your implementation here
-		return null;
+		double maxavg = 0;
+		  for(Student s : this.students)
+			  if(s.getAvgMark() > maxavg) maxavg = s.getAvgMark();
+		  ArrayList<Student> temp = new ArrayList<>();
+		  for(Student s : this.students)
+			  if(s.getAvgMark() == maxavg)  temp.add(s);
+		  return  temp.toArray(new Student[temp.size()]);
 	}
 
 	@Override
 	public Student getNextStudent(Student student) {
 		// Add your implementation here
-		return null;
+		this.bubbleSort();
+		   int i;
+		   for(i = 0; i < this.students.length; i++)
+			   if(this.students[i].equals(student)) break;
+		   return this.students[i+1];
+	}
+	private int getDiffYears(Date first, Date last) {
+            return first.getYear() - last.getYear();
+	}
+
+	private Calendar getCalendar(Date date) {
+          Calendar aDay = Calendar.getInstance();
+          aDay.setTime(date);
+		  return aDay;
 	}
 }
