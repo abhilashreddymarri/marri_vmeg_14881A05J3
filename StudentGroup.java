@@ -1,4 +1,5 @@
 import java.util.Date;
+import java.util.*;
 
 /**
  * A fix-sized array of students
@@ -231,19 +232,31 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public Student[] getByBirthDate(Date date) {
 		// Add your implementation here
-		return null;
+		ArrayList<Student> temp = new ArrayList<>();
+		   for(Student s : this.students)
+		   {
+		       if(s.getBirthDate().compareTo(date) == 0)
+				   temp.add(s);
+		   }
+		   return  temp.toArray(new Student[temp.size()]);
 	}
 
 	@Override
 	public Student[] getBetweenBirthDates(Date firstDate, Date lastDate) {
 		// Add your implementation here
-		return null;
+		ArrayList<Student> temp = new ArrayList<>();
+		   for(Student s : this.students)
+		   {
+		       if(s.getBirthDate().after(firstDate) && s.getBirthDate().before(lastDate))
+				   temp.add(s);
+		   }
+		   return  temp.toArray(new Student[temp.size()]); 
 	}
 
 	@Override
 	public Student[] getNearBirthDate(Date date, int days) {
 		// Add your implementation here
-		return null;
+		return null; 
 	}
 
 	@Override
